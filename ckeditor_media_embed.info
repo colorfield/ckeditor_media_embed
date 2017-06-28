@@ -1,0 +1,5 @@
+name = "CKEditor Media Embed plugin"
+description = "CKEditor wrapper for the Media Embed plugin."
+package = Custom
+dependencies[] = wysiwyg
+core = 7.x
