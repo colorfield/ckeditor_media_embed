@@ -2,17 +2,19 @@
 
 /**
  * Implements hook_wysiwyg_plugin().
+ *
+ * Defines the plugin reference.
  */
 function ckeditor_media_embed_wysiwyg_plugin($editor, $version) {
   $plugins = array();
   switch ($editor) {
     case 'ckeditor':
       if ($version > 4) {
-	$plugins['embed'] = array(
+        $plugins['embed'] = array(
           'path' => libraries_get_path('ckeditor') . '/plugins/embed',
           'filename' => 'plugin.js',
           'load' => TRUE,
-	        'buttons' => array(
+          'buttons' => array(
             'Embed' => t('Embed'),
           ),
           'internal' => FALSE,
@@ -25,10 +27,14 @@ function ckeditor_media_embed_wysiwyg_plugin($editor, $version) {
 
 /**
  * Implements hook_wysiwyg_editor_settings_alter().
+ *
+ * Defines a default embed provider. Must be defined since 4.7.0.
+ * @todo expose provider via a configuration form.
+ * @see http://docs.ckeditor.com/#!/api/CKEDITOR.plugins.embedBase.baseDefinition-property-providerUrl
+ * @see http://docs.ckeditor.com/#!/guide/dev_errors-section-embed-no-provider-url
  */
 function ckeditor_media_embed_wysiwyg_editor_settings_alter(&$settings, $context) {
   if ($context['profile']->editor == 'ckeditor') {
     $settings['embed_provider'] = '//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}';
-    $settings['extraPlugins'] = 'embed';
   }
 }
